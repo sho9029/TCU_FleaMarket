@@ -1,0 +1,48 @@
+﻿@page "/fetchdata"
+
+<PageTitle>User fetch</PageTitle>
+
+@using TCU_FleaMarket.Data
+@inject UserService UserService
+
+<h1>User data list</h1>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Biography</th>
+                <th>Image</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Biography</td>
+                    <td>@user.Image</td>
+                    <td>@user.Contact</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetUserAsync();
+    }
+}
