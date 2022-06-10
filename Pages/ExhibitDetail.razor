@@ -1,0 +1,44 @@
+﻿@page "/exhibit/{exhibitsId}"
+@inject UserService UserService
+@inject ExhibitService ExhibitService
+
+<div id="column" class="column2">
+    @if (user == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <h3>@exhibit.Name</h3>
+        <h3>商品の説明</h3>
+        <p>@exhibit.Description</p>
+        <h3>商品の写真</h3>
+        <ul>
+            <li>
+                <img src="https://www.photolibrary.jp/mhd6/img510/450-2017012812265661152.jpg" />
+            </li>
+        </ul>
+        <br>
+        <h3>連絡先</h3>
+        <ul>
+            <li>
+                <img src=@user.Contact alt="Contact"/>
+            </li>
+        </ul>
+    }
+</div>
+
+@code {
+    private User user;
+    private Exhibit exhibit;
+
+    [Parameter]
+    public string exhibitsId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var id = int.Parse(exhibitsId);
+        exhibit = (await ExhibitService.GetExhibitAsync()).First(q => q.Id == id);
+        user = (await UserService.GetUserAsync()).First(q => q.Id == exhibit.ExhibitorsId);
+    }
+}
