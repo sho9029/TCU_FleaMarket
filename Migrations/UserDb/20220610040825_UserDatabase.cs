@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TCU_FleaMarket.Migrations
+namespace TCU_FleaMarket.Migrations.UserDb
 {
-    public partial class Initial : Migration
+    public partial class UserDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

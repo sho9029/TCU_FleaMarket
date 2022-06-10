@@ -10,9 +10,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddDbContext<UserDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("UserConnection"));
 });
 builder.Services.AddScoped<UserService>();
+
+builder.Services.AddDbContext<ExhibitDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("exhibitConnection"));
+});
+builder.Services.AddScoped<ExhibitService>();
 
 var app = builder.Build();
 

@@ -8,29 +8,28 @@ using TCU_FleaMarket.Data;
 
 #nullable disable
 
-namespace TCU_FleaMarket.Migrations
+namespace TCU_FleaMarket.Migrations.ExhibitDb
 {
-    [DbContext(typeof(UserDbContext))]
-    [Migration("20220601110818_Initial")]
-    partial class Initial
+    [DbContext(typeof(ExhibitDbContext))]
+    [Migration("20220610040842_ExhibitDatabase")]
+    partial class ExhibitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
 
-            modelBuilder.Entity("TCU_FleaMarket.Data.User", b =>
+            modelBuilder.Entity("TCU_FleaMarket.Data.Exhibit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Biography")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("Contact")
-                        .HasColumnType("BLOB");
+                    b.Property<int>("ExhibitorsId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("BLOB");
@@ -41,26 +40,29 @@ namespace TCU_FleaMarket.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Exhibits");
 
                     b.HasData(
                         new
                         {
-                            Id = 1200,
-                            Biography = "bio1",
-                            Name = "name1"
+                            Id = 1,
+                            Description = "desc1",
+                            ExhibitorsId = 1200,
+                            Name = "ex1"
                         },
                         new
                         {
-                            Id = 1201,
-                            Biography = "bio2",
-                            Name = "name2"
+                            Id = 2,
+                            Description = "desc2",
+                            ExhibitorsId = 1201,
+                            Name = "ex2"
                         },
                         new
                         {
-                            Id = 1202,
-                            Biography = "bio3",
-                            Name = "name3"
+                            Id = 3,
+                            Description = "desc3",
+                            ExhibitorsId = 1202,
+                            Name = "ex3"
                         });
                 });
 #pragma warning restore 612, 618

@@ -7,7 +7,7 @@ using TCU_FleaMarket.Data;
 
 #nullable disable
 
-namespace TCU_FleaMarket.Migrations
+namespace TCU_FleaMarket.Migrations.UserDb
 {
     [DbContext(typeof(UserDbContext))]
     partial class UserDbContextModelSnapshot : ModelSnapshot
