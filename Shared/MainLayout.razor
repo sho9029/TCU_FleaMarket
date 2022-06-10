@@ -2,16 +2,26 @@
 
 <PageTitle>TCU_FleaMarket</PageTitle>
 
+<header>
+    <h1 id="title">
+        <NavLink href="">都市大フリマ</NavLink>
+    </h1>
+
+    <nav id="menubar">
+        <ul>
+            <li>
+                <NavLink href="">Home</NavLink>
+            </li>
+            <li>
+                <NavLink href="fetchdata">FetchData</NavLink>
+            </li>
+        </ul>
+    </nav>
+    <hr />
+</header>
+
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
         <article class="content px-4">
             @Body
         </article>
