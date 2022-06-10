@@ -1,5 +1,45 @@
 ﻿@page "/"
+@inject ExhibitService ExhibitService
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<div id="column" class="column5">
+    <div class="wrapper">
+        <div class="search-area">
+            <form>
+                <input type="text" id="search-text" placeholder="何をお探しですか？" />
+            </form>
+            <div class="search-result">
+                <!-- 検索結果の表示 -->
+            </div>
+        </div>
+    </div>
+    <h3>おすすめ商品</h3>
+    @if (exhibits == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var exhibit in exhibits!)
+            {
+                <li>
+                    <NavLink href=@($"exhibit/{exhibit.Id}")>
+                        <img src="https://www.photolibrary.jp/mhd6/img510/450-2017012812265661152.jpg" />
+                        <p>@exhibit.Name</p>
+                    </NavLink>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    private List<Exhibit>? exhibits;
+
+    protected override async Task OnInitializedAsync()
+    {
+        exhibits = await ExhibitService.GetExhibitAsync();
+    }
+}
