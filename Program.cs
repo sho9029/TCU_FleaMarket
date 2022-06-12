@@ -20,6 +20,11 @@ builder.Services.AddDbContext<ExhibitDbContext>(options =>
 });
 builder.Services.AddScoped<ExhibitService>();
 
+builder.Services.AddSignalR(e =>
+{
+    e.MaximumReceiveMessageSize = (long)1.024e8;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
