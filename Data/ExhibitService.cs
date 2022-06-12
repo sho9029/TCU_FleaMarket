@@ -15,7 +15,14 @@ public class ExhibitService
     /// </summary>
     public async Task<List<Exhibit>> GetExhibitAsync()
     {
-        return await dbContext.Exhibits.ToListAsync();
+        try
+        {
+            return await dbContext.Exhibits.ToListAsync();
+        }
+        catch (ArgumentNullException)
+        {
+            throw;
+        }
     }
 
     /// <summary>

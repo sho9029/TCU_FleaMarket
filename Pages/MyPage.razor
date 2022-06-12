@@ -9,7 +9,7 @@
     <ul>
         <li>
             <img src="@GetImage(user)" alt="user image" />
-            <h3 style="margin-top: -16px;"></h3>
+            <h3 style="margin-top: -16px;">@user.Name</h3>
         </li>
     </ul>
     <br>
@@ -41,8 +41,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        user = (await UserService.GetUserAsync()).First(q => q.Id == 1200);
-        myExhibits = (await ExhibitService.GetExhibitAsync()).FindAll(q => q.ExhibitorsId == user.Id);
+        user = (await UserService.GetUserAsync()).First(q => q.Id == 1);
+
+        try
+        {
+            myExhibits = (await ExhibitService.GetExhibitAsync()).FindAll(q => q.ExhibitorsId == user.Id);
+        }
+        catch (ArgumentNullException)
+        {
+            myExhibits = null;
+        }
     }
 
     private string GetImage<T>(T obj)
