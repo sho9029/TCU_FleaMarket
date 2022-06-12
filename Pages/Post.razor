@@ -47,17 +47,14 @@
         Console.WriteLine("OnSubmit");
         var exhibit = new Exhibit
         {
+            // Debug
+            ExhibitorsId = 1200,
             Name = postItem.Name,
             Description = postItem.Description,
             Image = postItem.Image,
         };
 
-        var task = ExhibitService.AddExhibitAsync(exhibit);
-        await task;
-        if (task.IsCompleted)
-        {
-            NavigationManager.NavigateTo("/", false);
-        }
-        
+        await ExhibitService.AddExhibitAsync(exhibit);
+        NavigationManager.NavigateTo("/", false);
     }
 }
