@@ -28,6 +28,7 @@
                     <NavLink class="exhibit-item" href=@($"exhibit/{exhibit.Id}")>
                         <img src="@GetImage(exhibit)"/>
                         <p>@exhibit.Name</p>
+                        <p>&yen;@exhibit.Price</p>
                     </NavLink>
                 </li>
             }
