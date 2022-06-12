@@ -36,11 +36,12 @@
 </div>
 
 @code {
-    private User user;
-    private List<Exhibit> myExhibits;
+    private User? user;
+    private List<Exhibit>? myExhibits;
 
     protected override async Task OnInitializedAsync()
     {
+        // Debug
         user = (await UserService.GetUserAsync()).First(q => q.Id == 1);
 
         try
@@ -49,6 +50,7 @@
         }
         catch (ArgumentNullException)
         {
+            // このユーザーの出品物がない場合
             myExhibits = null;
         }
     }
