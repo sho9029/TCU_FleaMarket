@@ -36,6 +36,9 @@ namespace TCU_FleaMarket.Migrations.ExhibitDb
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("Exhibits");
@@ -46,21 +49,24 @@ namespace TCU_FleaMarket.Migrations.ExhibitDb
                             Id = 1,
                             Description = "desc1",
                             ExhibitorsId = 1200,
-                            Name = "ex1"
+                            Name = "ex1",
+                            Price = 200
                         },
                         new
                         {
                             Id = 2,
                             Description = "desc2",
                             ExhibitorsId = 1201,
-                            Name = "ex2"
+                            Name = "ex2",
+                            Price = 1000
                         },
                         new
                         {
                             Id = 3,
                             Description = "desc3",
                             ExhibitorsId = 1202,
-                            Name = "ex3"
+                            Name = "ex3",
+                            Price = 2500
                         });
                 });
 #pragma warning restore 612, 618
