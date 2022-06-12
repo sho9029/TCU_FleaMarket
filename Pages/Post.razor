@@ -1,6 +1,5 @@
 ﻿@page "/post"
 @inject IJSRuntime JSRuntime
-@inject UserService UserService
 @inject ExhibitService ExhibitService
 @inject NavigationManager NavigationManager
 
@@ -22,7 +21,7 @@
 
 @code {
     private PostItem postItem { get; set; } = new PostItem();
-    IJSObjectReference module;
+    IJSObjectReference? module;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -44,6 +43,11 @@
 
     private async Task HandleSubmit()
     {
+        if (postItem.Name == null)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "商品の名前を入力してください。");
+        }
+
         var exhibit = new Exhibit
         {
             // Debug

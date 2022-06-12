@@ -9,7 +9,7 @@ export function setPrevImg() {
             return;
         }
         else if (!file.type.match('image/png') && !file.type.match('image/jpeg')) {
-            alert('Please select an image file.');
+            alert('.jpg, .jpegまたは.pngを選択してください。');
             return;
         }
 
