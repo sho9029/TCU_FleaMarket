@@ -28,17 +28,7 @@ namespace TCU_FleaMarket.Migrations.UserDb
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Biography", "Contact", "Image", "Name" },
-                values: new object[] { 1200, "bio1", null, null, "name1" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Biography", "Contact", "Image", "Name" },
-                values: new object[] { 1201, "bio2", null, null, "name2" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Biography", "Contact", "Image", "Name" },
-                values: new object[] { 1202, "bio3", null, null, "name3" });
+                values: new object[] { 1, "自己紹介", null, null, "ユーザー1" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
