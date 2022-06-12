@@ -1,0 +1,63 @@
+﻿@page "/post"
+@inject IJSRuntime JSRuntime
+@inject UserService UserService
+@inject ExhibitService ExhibitService
+@inject NavigationManager NavigationManager
+
+<div id="post-form">
+    <h3>商品の投稿</h3>
+    <h4>商品の画像</h4>
+    <img id="prev-img" src="" />
+    <InputFile id="input-img" type="file" placeholder="image" accept="image/*" OnChange="OnInputFileChange"/>
+    <button type="button" class="btn" onclick="document.querySelector('#input-img').click();">Select image</button>
+    <h4>商品の名前</h4>
+    <input type="text" name="name" placeholder="name" @bind-value="@postItem.Name"/>
+    <h4>商品の説明</h4>
+    <input type="text" name="description" placeholder="description" @bind-value="@postItem.Description"/>
+    <br>
+    <button class="btn" name="submit" @onclick="@HandleSubmit">Submit</button>
+</div>
+
+@code {
+    private PostItem postItem { get; set; } = new PostItem();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/post.js");
+        await module.InvokeVoidAsync("setPrevImg");
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = await e.File.RequestImageFileAsync("image/jpeg", 500, 500);
+        var imgStream = file.OpenReadStream(file.Size);
+        byte[] buffer = new byte[imgStream.Length];
+        await imgStream.ReadAsync(buffer);
+        postItem.Image = buffer;
+        await imgStream.DisposeAsync();
+    }
+
+    private async Task HandleSubmit()
+    {
+        Console.WriteLine("OnSubmit");
+        var exhibit = new Exhibit
+        {
+            Name = postItem.Name,
+            Description = postItem.Description,
+            Image = postItem.Image,
+        };
+
+        var task = ExhibitService.AddExhibitAsync(exhibit);
+        await task;
+        if (task.IsCompleted)
+        {
+            NavigationManager.NavigateTo("/", false);
+        }
+        
+    }
+}
