@@ -1,8 +1,73 @@
 ﻿@page "/mypage"
 @inject UserService UserService
+@inject ExhibitService ExhibitService
 
 <PageTitle>My page</PageTitle>
 
-@code {
+<div id="column" class="column5">
+    <h3>マイページ</h3>
+    <ul>
+        <li>
+            <img src="@GetImage(user)" alt="user image" />
+            <h3 style="margin-top: -16px;"></h3>
+        </li>
+    </ul>
+    <br>
+    <h3>自分の投稿</h3>
+    @if (myExhibits == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var exhibit in myExhibits)
+            {
+                <li>
+                    <NavLink class="exhibit-item" href=@($"exhibit/{exhibit.Id}")>
+                        <img src="@GetImage(exhibit)"/>
+                        <p>@exhibit.Name</p>
+                        <p>&yen;@exhibit.Price</p>
+                    </NavLink>
+                </li>
+            }
+        </ul>
+    }
+</div>
 
+@code {
+    private User user;
+    private List<Exhibit> myExhibits;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = (await UserService.GetUserAsync()).First(q => q.Id == 1200);
+        myExhibits = (await ExhibitService.GetExhibitAsync()).FindAll(q => q.ExhibitorsId == user.Id);
+    }
+
+    private string GetImage<T>(T obj)
+    {
+        if (typeof(T) == typeof(User))
+        {
+            var user = obj as User;
+            if (user.Image != null)
+            {
+                return $"data:image/jpeg;base64,{ Convert.ToBase64String(user.Image) }";
+            }
+        }
+        else if (typeof(T) == typeof(Exhibit))
+        {
+            var exhibit = obj as Exhibit;
+            if (exhibit.Image != null)
+            {
+                return $"data:image/jpeg;base64,{ Convert.ToBase64String(exhibit.Image) }";
+            }
+        }
+        else
+        {
+            throw new Exception();
+        }
+
+        return "https://oki-sitelabo.com/wp-content/themes/oki-workshop/demo/20200603/img/noimage.jpg";
+    }
 }
