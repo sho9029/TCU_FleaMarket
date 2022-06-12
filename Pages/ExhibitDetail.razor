@@ -5,7 +5,7 @@
 @inject IJSRuntime JSRuntime
 
 <div id="column" class="column2">
-    @if (user == null)
+    @if (exhibit == null)
     {
         <p><em>Loading...</em></p>
     }
@@ -23,35 +23,54 @@
         <h3>商品の価格</h3>
         <p>&yen;@exhibit.Price</p>
         <br>
-        <h3>連絡先</h3>
+        <h3>出品者の連絡先</h3>
         <ul>
             <li>
                 <img src=@user.Contact alt="Contact"/>
             </li>
         </ul>
+        <br>
+        <button class="btn" @onclick="@DeleteExhibit">Delete</button>
     }
 </div>
 
 @code {
-    private User user;
-    private Exhibit exhibit;
+    private User? user;
+    private Exhibit? exhibit;
 
     [Parameter]
     public string exhibitsId { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var id = int.Parse(exhibitsId);
+        if (!firstRender)
+        {
+            return;
+        }
+
+        if (!int.TryParse(exhibitsId, out var id))
+        {
+            // exhibitIdをint型に変換できない場合
+            await NavigateToIndex();
+        }
+
         try
         {
-            exhibit = (await ExhibitService.GetExhibitAsync()).First(q => q.Id == id);
-            user = (await UserService.GetUserAsync()).First(q => q.Id == exhibit.ExhibitorsId);
+            exhibit = (await ExhibitService.GetExhibitAsync()).FirstOrDefault(q => q.Id == id);
+            if (exhibit == null)
+            {
+                // Docker使用時に例外がキャッチされないため追加
+                await NavigateToIndex();
+            }
+            user = (await UserService.GetUserAsync()).FirstOrDefault(q => q.Id == exhibit.ExhibitorsId);
         }
-        catch (InvalidOperationException e)
+        catch (Exception e) when (e is ArgumentNullException || e is InvalidOperationException)
         {
-            await JSRuntime.InvokeVoidAsync("alert", "Invalid URL.");
-            NavigationManager.NavigateTo("/", true);
+            // exhibitsIdに存在しない商品IDが入力された場合
+            await NavigateToIndex();
         }
+
+        StateHasChanged();
     }
 
     private string GetImage()
@@ -65,5 +84,23 @@
             // No image
             return "https://oki-sitelabo.com/wp-content/themes/oki-workshop/demo/20200603/img/noimage.jpg";
         }
+    }
+
+    private async Task DeleteExhibit()
+    {
+        var ans = await JSRuntime.InvokeAsync<bool>("confirm", "商品を削除しますか？");
+        if (ans)
+        {
+            // 削除する
+            await ExhibitService.DeleteExhibitAsync(exhibit);
+            await JSRuntime.InvokeVoidAsync("alert", "商品を削除しました。");
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    private async Task NavigateToIndex()
+    {
+        await JSRuntime.InvokeVoidAsync("alert", "不正なURLです。");
+        NavigationManager.NavigateTo("/", true);
     }
 }
