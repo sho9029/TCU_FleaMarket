@@ -25,4 +25,4 @@ heroku container:release web -a {ProjectId}
 ## 注意点
 ・SQLiteを使用しているため、デプロイする際にデータベースが初期化される
 
-・herokuでは、24時間ごとにSQLiteのデータベースが[初期化される](https://devcenter.heroku.com/ja/articles/sqlite3)
+・Herokuでは、24時間ごとにSQLiteのデータベースが[初期化される](https://devcenter.heroku.com/ja/articles/sqlite3)
