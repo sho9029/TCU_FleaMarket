@@ -21,3 +21,6 @@ CMD ASPNETCORE_URLS=http://*:$PORT dotnet TCU_FleaMarket.dll
 heroku container:push web -a {ProjectId}
 heroku container:release web -a {ProjectId}
 ```
+
+## デプロイ時の注意点
+・SQLiteを使用しているため、デプロイする際にデータベースが初期化される
