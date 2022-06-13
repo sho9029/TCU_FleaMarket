@@ -4,24 +4,38 @@
 @inject NavigationManager NavigationManager
 
 <div id="post-form">
+    @if (isLoading)
+    {
+        <div id="loading">
+            <div class="w-100 d-flex justify-content-center align-items-center spinner-outer">
+                <div class="spinner-border text-primary spinner-custom" role="status"></div>
+            </div>
+    </div>
+    }
     <h3>商品の投稿</h3>
     <h4>商品の画像</h4>
     <img id="prev-img" src="" />
     <InputFile id="input-img" type="file" placeholder="image" accept="image/png, image/jpeg" OnChange="OnInputFileChange" />
-    <button type="button" class="btn" onclick="document.querySelector('#input-img').click();">Select image</button>
+    <button type="button" class="btn" disabled="@isLoading" onclick="document.querySelector('#input-img').click();">Select image</button>
     <h4>商品の名前</h4>
-    <input type="text" name="name" placeholder="name" @bind-value="@postItem.Name" />
+    <input type="text" name="name" disabled="@isLoading" placeholder="name" @bind-value="@postItem.Name" />
     <h4>商品の価格</h4>
-    &yen;<input type="number" name="price" placeholder="price" @bind-value=@postItem.Price />
+    &yen;<input type="number" name="price" disabled="@isLoading" placeholder="price" @bind-value=@postItem.Price />
     <h4>商品の説明</h4>
-    <input type="text" name="description" placeholder="description" @bind-value="@postItem.Description" />
+    <input type="text" name="description" disabled="@isLoading" placeholder="description" @bind-value="@postItem.Description" />
     <br>
-    <button class="btn" name="submit" @onclick="@HandleSubmit">Submit</button>
+    <button class="btn" name="submit" disabled="@isLoading" @onclick="@HandleSubmit">Submit</button>
 </div>
 
 @code {
+    private bool isLoading = true;
     private PostItem postItem { get; set; } = new PostItem();
     IJSObjectReference? module;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -32,6 +46,8 @@
 
         module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/post.js");
         await module.InvokeVoidAsync("setPrevImg");
+        isLoading = false;
+        StateHasChanged();
     }
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
