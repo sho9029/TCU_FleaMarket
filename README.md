@@ -1,7 +1,15 @@
 # TCU_FleaMarket
 
 ## Herokuへのデプロイ
-事前にheroku CLIでログインしておく
+
+### 事前準備
+・事前にheroku CLIでログインしておく
+
+・Docker Desktopをインストール
+
+### デプロイの手順
+
+・Docker Desktopを起動する
 
 ・VisualStudioでこのプロジェクトをデプロイ
 
@@ -25,4 +33,4 @@ heroku container:release web -a {ProjectId}
 ## 注意点
 ・SQLiteを使用しているため、デプロイする際にデータベースが初期化される
 
-・Herokuでは、24時間ごとにSQLiteのデータベースが[初期化される](https://devcenter.heroku.com/ja/articles/sqlite3)
+・Herokuでは、一定時間ごとにSQLiteのデータベースが[初期化される](https://devcenter.heroku.com/ja/articles/sqlite3)
