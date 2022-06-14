@@ -3,9 +3,9 @@
 ## Herokuへのデプロイ
 
 ### 事前準備
-・事前にheroku CLIでログインしておく
+・[heroku CLIをインストールしてログインする](https://devcenter.heroku.com/ja/articles/heroku-cli)
 
-・Docker Desktopをインストール
+・[Docker Desktopをインストール](https://www.docker.com/get-started/)
 
 ### デプロイの手順
 
