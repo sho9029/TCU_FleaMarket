@@ -29,6 +29,7 @@ CMD ASPNETCORE_URLS=http://*:$PORT dotnet TCU_FleaMarket.dll
 heroku container:push web -a {ProjectId}
 heroku container:release web -a {ProjectId}
 ```
+{ProjectId}には、HerokuでのApp Nameを入力
 
 ## 注意点
 ・SQLiteを使用しているため、デプロイする際にデータベースが初期化される
