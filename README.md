@@ -11,7 +11,7 @@
 
 ・Docker Desktopを起動する
 
-・VisualStudioでこのプロジェクトをデプロイ
+・Visual Studioでこのプロジェクトをデプロイ
 
 ・ターミナルを開き、デプロイしたディレクトリに移動する
 
@@ -29,8 +29,11 @@ CMD ASPNETCORE_URLS=http://*:$PORT dotnet TCU_FleaMarket.dll
 heroku container:push web -a {ProjectId}
 heroku container:release web -a {ProjectId}
 ```
+{ProjectId}には、HerokuでのApp Nameを入力
 
 ## 注意点
 ・SQLiteを使用しているため、デプロイする際にデータベースが初期化される
 
 ・Herokuでは、一定時間ごとにSQLiteのデータベースが[初期化される](https://devcenter.heroku.com/ja/articles/sqlite3)
+
+・プロジェクトに含まれる"Dockerfile"はVisual Studioでのデバッグ用のものであり、Herokuへのデプロイには使用しない
