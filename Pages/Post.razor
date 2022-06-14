@@ -12,21 +12,21 @@
             <div class="w-100 d-flex justify-content-center align-items-center spinner-outer">
                 <div class="spinner-border text-primary spinner-custom" role="status"></div>
             </div>
-    </div>
+        </div>
     }
     <h3>商品の投稿</h3>
     <h4>商品の画像</h4>
     <img id="prev-img" src="" />
     <InputFile id="input-img" type="file" placeholder="image" accept="image/png, image/jpeg" OnChange="OnInputFileChange" />
-    <button type="button" class="btn" disabled="@isLoading" onclick="document.querySelector('#input-img').click();">Select image</button>
+    <button type="button" class="btn" disabled="@isLoading" onclick="document.querySelector('#input-img').click();">画像を選択</button>
     <h4>商品の名前</h4>
-    <input type="text" name="name" disabled="@isLoading" placeholder="name" @bind-value="@postItem.Name" />
+    <input type="text" name="name" disabled="@isLoading" placeholder="商品名" @bind-value="@postItem.Name" />
     <h4>商品の価格</h4>
-    &yen;<input type="number" name="price" disabled="@isLoading" placeholder="price" @bind-value=@postItem.Price />
+    &yen;<input type="number" name="price" disabled="@isLoading" placeholder="価格" @bind-value=@postItem.Price />
     <h4>商品の説明</h4>
-    <input type="text" name="description" disabled="@isLoading" placeholder="description" @bind-value="@postItem.Description" />
+    <input type="text" name="description" disabled="@isLoading" placeholder="商品説明" @bind-value="@postItem.Description" />
     <br>
-    <button class="btn" name="submit" disabled="@isLoading" @onclick="@HandleSubmit">Submit</button>
+    <button class="btn" name="submit" disabled="@isLoading" @onclick="@HandleSubmit">出品</button>
 </div>
 
 @code {
