@@ -1,5 +1,7 @@
 # TCU_FleaMarket
 
+学部の授業で作成
+
 ## Herokuへのデプロイ
 
 ### 事前準備
